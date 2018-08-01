@@ -197,14 +197,14 @@ boolean WiFiManager::startConfigPortal() {
 }
 
 boolean  WiFiManager::startConfigPortal(char const *apName, char const *apPassword) {
-  
+
   if(!WiFi.isConnected()){
-    WiFi.persistent(false);
+    //WiFi.persistent(false);
     // disconnect sta, start ap
-    WiFi.disconnect(); //  this alone is not enough to stop the autoconnecter
+    //WiFi.disconnect(); //  this alone is not enough to stop the autoconnecter
     WiFi.mode(WIFI_AP);
     WiFi.persistent(true);
-  } 
+  }
   else {
     //setup AP
     WiFi.mode(WIFI_AP_STA);
@@ -289,6 +289,10 @@ int WiFiManager::connectWifi(String ssid, String pass) {
   }
   //check if we have ssid and pass and force those, if not, try with last saved values
   if (ssid != "") {
+    DEBUG_WM(F("Wifi.begin:"));
+    DEBUG_WM(ssid);
+    DEBUG_WM(pass);
+    WiFi.mode(WIFI_AP_STA);
     WiFi.begin(ssid.c_str(), pass.c_str());
   } else {
     if (WiFi.SSID()) {
